@@ -1,28 +1,28 @@
-1. Gateway Service:
+1. Gateway Service: 1000
 Chức năng: Nơi tiếp nhận và xử lý các yêu cầu từ client, định tuyến yêu cầu đến các service tương ứng và trả về kết quả cho client.
 Công nghệ sử dụng: Django REST Framework
 2. Product Service:
 Chức năng: Quản lý các sản phẩm trong hệ thống, bao gồm thông tin sản phẩm, giá cả, số lượng trong kho, v.v.
 Chia ra thành các chức năng nhỏ hơn: 
-    -  Book:
-    -  Electronics:
-    -  Clothes:
+    -  Book: 2100
+    -  Electronics: 2200
+    -  Clothes: 2300
 Công nghệ sử dụng: Django ORM
-3. Order Service:
+3. Order Service: 3000
 Chức năng: Quản lý các đơn hàng trong hệ thống, bao gồm thông tin đơn hàng, khách hàng, sản phẩm, giá cả, v.v.
 Công nghệ sử dụng: Django ORM
-4. User Service:
+4. User Service: 4000
 Chức năng: Quản lý thông tin người dùng trong hệ thống, bao gồm thông tin cá nhân, địa chỉ, thông tin đăng nhập, v.v.
 Công nghệ sử dụng: Django ORM
-5. Cart Service:
+5. Cart Service: 5000
 Chức năng: Quản lý giỏ hàng của khách hàng, bao gồm thông tin sản phẩm, số lượng, giá cả, v.v.
 Công nghệ sử dụng: Django ORM
-6. Payment Service:
+6. Payment Service: 6000
 Chức năng: Xử lý thanh toán cho các đơn hàng, bao gồm thông tin thanh toán, xác nhận giao dịch, v.v.
 Công nghệ sử dụng: Django ORM
-7. Notification Service:
+7. Notification Service: 7000
 Chức năng: Gửi thông báo đến khách hàng về các hoạt động trong hệ thống, bao gồm cập nhật đơn hàng, thanh toán, v.v.
 Công nghệ sử dụng: Django ORM
-8. Inventory Service:
+8. Inventory Service: 8000
 Chức năng: Quản lý kho hàng trong hệ thống, bao gồm thông tin số lượng sản phẩm còn lại, vị trí lưu trữ, v.v.
 Công nghệ sử dụng: Django ORM
