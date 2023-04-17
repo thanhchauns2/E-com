@@ -196,7 +196,7 @@ def book_search(request):
             search_term = val1.get("search_term")
             
             if search_term:
-                books = Book.objects.filter(Q(title__icontains=search_term) | Q(author__name__icontains=search_term) | Q(category__name__icontains=search_term))
+                books = Book.objects.filter(Q(id__icontains=search_term) |Q(title__icontains=search_term) | Q(author__name__icontains=search_term) | Q(category__name__icontains=search_term))
                 books_list = []
                 for book in books:
                     book_dict = {}

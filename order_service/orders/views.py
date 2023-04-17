@@ -22,7 +22,6 @@ def create_order(request):
             user_id = val1.get("User ID")
             # description = val1.get("Description")
             description = requests.post('http://127.0.0.1:5000/carts/show_cart/', json={"User ID": user_id}).json()
-            print(description)
             status = "Delivering"
             
             if user_id:

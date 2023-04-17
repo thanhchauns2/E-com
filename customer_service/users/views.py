@@ -1,7 +1,7 @@
 import random
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-import json
+import json, requests
 from .models import Account, FullName, Address, Customer
 
 def __create_account(username, password, email):
@@ -129,7 +129,7 @@ def create_customer(request):
             val1 = json.loads(request.body)
             
             account_id = val1.get("Account ID")
-            full_name_id = val1.get("Full Name ID")
+            full_name_id = val1.get("Fullname ID")
             address_id = val1.get("Address ID")
             
             if account_id and full_name_id and address_id:
@@ -138,6 +138,7 @@ def create_customer(request):
                 resp['status_code'] = '200'
                 resp['message'] = 'Added customer.'
                 resp['data'] = {'customer_id': respdata}
+                requests.post('http://127.0.0.1:5000/carts/create_cart/', json={"User ID": respdata}).json()
             else:
                 resp['status'] = 'Failed'
                 resp['status_code'] = '400'

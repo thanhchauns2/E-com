@@ -1,11 +1,11 @@
-import random, json
+import random, json, requests
 from .models import Cart
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
 def __create_cart(user_id):
     id = random.randint(100000000, 99999999999999)
-    new_cart = Cart(id=id, user_id=user_id, items={'summary' : 'your items will be here'})
+    new_cart = Cart(id=id, user_id=user_id, items={})
     new_cart.save()
     return new_cart.id
 
@@ -31,10 +31,9 @@ def create_cart(request):
     return HttpResponse(json.dumps(resp), content_type='application/json')
 
 def find_item_in_cart(cart, product_id):
-    items = cart.items
-    for item in items:
-        if item['product_id'] == product_id:
-            return item['quantity']
+    for item in cart.items:
+        if item == str(product_id):
+            return cart.items[item]
     return 0
 
 
@@ -58,16 +57,20 @@ def add_item_to_cart(request):
             quan = find_item_in_cart(cart=cart, product_id=product_id)
             if quan == 0: # Thêm sản phẩm mới vào danh sách items của cart
                 items = cart.items
-                items.append({'Product ID': product_id, 'Quantity': quantity})
+                items[product_id] = quantity
+                # items.append({'Product ID': product_id, 'Quantity': quantity})
                 cart.items = items
                 cart.save()
             else: # Chỉnh sửa số lượng
-                for item in items:
-                    if item['Product ID'] == product_id:
-                        item['Quantity'] = item['Quantity'] + quantity
+                print(cart.items)
+                for item in cart.items:
+                    print(item)
+                    if item == str(product_id):
+                        cart.items[item] = cart.items[item] + quantity
+                cart.save()
 
             # Trả về thông tin của cart đã được cập nhật
-            response_data = {'Cart ID': cart.cart_id, 'User ID': cart.user_id, 'Items': cart.items}
+            response_data = {'Cart ID': cart.id, 'User ID': cart.user_id, 'Items': cart.items}
             return HttpResponse(json.dumps(response_data), content_type='application/json')
 
     return HttpResponse('Invalid request', status=400)
@@ -90,7 +93,14 @@ def show_cart(request):
             items = cart.items
             response_data = []
             for item in items:
-                response_data.append(item)
+                print(item)
+                des = requests.post('http://127.0.0.1:2100/books/books/search/', json={"search_term": int(item)}).json()
+                print(des)
+                response_data.append({item : {
+                        'Description' : des,
+                        'Quantity' : items[item]
+                    }
+                })
 
             return HttpResponse(json.dumps(response_data), content_type='application/json')
 

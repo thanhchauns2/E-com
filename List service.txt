@@ -2,26 +2,58 @@
 Chức năng: Nơi tiếp nhận và xử lý các yêu cầu từ client, định tuyến yêu cầu đến các service tương ứng và trả về kết quả cho client.
 Công nghệ sử dụng: Django REST Framework
 2. Product Service:
-Chức năng: Quản lý các sản phẩm trong hệ thống, bao gồm thông tin sản phẩm, giá cả, số lượng trong kho, v.v.
 Chia ra thành các chức năng nhỏ hơn: 
     -  Book: 2100 - done
+        2.1.1: Tạo author:
+            * JSON truyền vào: {Author Name, Email, Address}
+        2.1.2: Tạo category
+            * JSON truyền vào: {Category Name}
+        2.1.3: Tạo book:
+            * JSON truyền vào: {Title, Author ID, Category ID, Published Date, Price, Description}
+        2.1.4: Xoá book:
+            * JSON truyền vào: {Book ID}
+        2.1.5: Tìm author
+            * JSON truyền vào: {Author Name}
+        2.1.6: Tìm category
+            * JSON truyền vào: {Category Name}
+        2.1.7: Tìm book
+            * JSON truyền vào: {search_term}, search_term có thể là: id sách, tên sách, tên category, tên author
     -  Electronics: 2200 - Not neccessary
     -  Clothes: 2300 - Not neccessary
-Công nghệ sử dụng: Django ORM
 3. Order Service: 3000 - done
 Chức năng: 
-    + Tạo hoá đơn
+    3.1. Tạo hoá đơn:
         * JSON truyền vào: {User ID}
-        * Cart sẽ bị clear sau khi gọi chức năng này
-    + Cập nhật tình trạng hoá đơn
+        * Các chức năng được gọi: 5.4, 5.5
+    3.2. Cập nhật tình trạng hoá đơn
         * JSON truyền vào: {Order ID, Status}
-Công nghệ sử dụng: Django ORM
 4. Customer Service: 4000 - done
-Chức năng: Quản lý thông tin người dùng trong hệ thống, bao gồm thông tin cá nhân, địa chỉ, thông tin đăng nhập, v.v.
+Chức năng: 
+    4.1. Tạo tài khoản mới:
+        * JSON truyền vào: {Username, Password, Email}
+    4.2. Xoá tài khoản:
+        * JSON truyền vào: {Account ID}
+    4.3. Tạo fullname:
+        * JSON truyền vào: {First Name, Last Name}
+    4.4. Tạo address:
+        * JSON truyền vào: {Address, City, Country}
+    4.5. Tạo customer:
+        * JSON truyền vào: {Account ID, Fullname ID, Address ID}
+        * Các chức năng được gọi: 5.1
 Công nghệ sử dụng: Django ORM
 5. Cart Service: 5000 - done
-Chức năng: Quản lý giỏ hàng của khách hàng, bao gồm thông tin sản phẩm, số lượng, giá cả, v.v.
-Công nghệ sử dụng: Django ORM
+Chức năng: 
+    5.1. Tạo một cart:
+        * JSON truyền vào: {User ID}
+    5.2. Thêm item vào cart:
+        * JSON truyền vào: {User ID, Product ID, Quantity}
+    5.3. Xoá item khỏi cart:
+        * JSON truyền vào: {User ID, Product ID, Quantity}
+    5.4. Xem thông tin cart:
+        * JSON truyền vào: {User ID}
+        * Các chức năng được gọi: 2.1.7 
+    5.5. Clear tất cả item trong cart
+        * JSON truyền vào: {User ID}
 6. Payment Service: 6000
 Chức năng: Xử lý thanh toán cho các đơn hàng, bao gồm thông tin thanh toán, xác nhận giao dịch, v.v.
 Công nghệ sử dụng: Django ORM
@@ -29,5 +61,16 @@ Công nghệ sử dụng: Django ORM
 Chức năng: Gửi thông báo đến khách hàng về các hoạt động trong hệ thống, bao gồm cập nhật đơn hàng, thanh toán, v.v.
 Công nghệ sử dụng: Django ORM
 8. Inventory Service: 8000
-Chức năng: Quản lý kho hàng trong hệ thống, bao gồm thông tin số lượng sản phẩm còn lại, vị trí lưu trữ, v.v.
-Công nghệ sử dụng: Django ORM
+Chức năng: 
+    8.1. Khởi tạo kho hàng
+        * JSON truyền vào: {}
+    8.2. Cập nhật thông tin kho hàng (địa chỉ, kích thước, status):
+        * JSON truyền vào (có thể có hoặc không): {Address, Book Quantity, Clothes Quantity, Electronic Quantity, Status}
+    8.3. Thêm một món hàng vào kho
+        * JSON truyền vào: {Product ID, Quantity}
+    8.4. Trả về thông tin kho hàng
+        * JSON truyền vào: {}
+    8.5. Xoá một món hàng khỏi kho
+        * JSON truyền vào: {Product ID, Quantity}
+    8.6. Kiểm tra dung tích còn thừa của kho hàng
+        * JSON truyền vào: {Product ID, Quantity}
