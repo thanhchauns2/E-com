@@ -1,6 +1,43 @@
 1. Gateway Service: 1000
-Chức năng: Nơi tiếp nhận và xử lý các yêu cầu từ client, định tuyến yêu cầu đến các service tương ứng và trả về kết quả cho client.
-Công nghệ sử dụng: Django REST Framework
+Chức năng:
+    1.1. Đăng kí
+        * JSON truyền vào: {Username, Password, Email, Address, City, Country, First Name, Last Name}
+        * Các chức năng được gọi: 4.1, 4.3, 4.4, 4.5
+    1.2. Đăng nhập
+        (Tạm thời chưa cần)
+    1.3. Quản lí kho hàng:
+        1.3.1. Khởi tạo kho hàng + cập nhật kho hàng
+            * JSON truyền vào (có thể có hoặc không): {Address, Book Quantity, Clothes Quantity, Electronic Quantity, Status}
+            * Các chức năng được gọi: 8.1, 8.2
+        1.3.2. Thêm hàng vào kho
+            * JSON truyền vào: {Product ID, Quantity}
+            * Các chức năng được gọi: 8.3
+        1.3.3. Xoá hàng khỏi kho
+            * JSON truyền vào: {Product ID, Quantity}
+            * Các chức năng được gọi: 8.5
+        1.3.4 Kiểm tra kho hàng
+            * JSON truyền vào: {}
+            * Các chức năng được gọi: 8.4
+    1.4. Quản lí giỏ hàng:
+        1.4.1. Thêm hàng vào giỏ hàng
+            * JSON truyền vào: {User ID, Product ID, Quantity}
+            * Các chức năng được gọi: 5.2
+        1.4.2. Xoá hàng khỏi giỏ hàng
+            * JSON truyền vào: {User ID, Product ID, Quantity}
+            * Các chức năng được gọi: 5.3
+        1.4.3. Kiểm tra giỏ hàng
+            * JSON truyền vào: {User ID}
+            * Các chức năng được gọi: 5.4
+        1.4.4. Mua hàng
+            * JSON truyền vào: {User ID}
+            * Các chức năng được gọi: 3.1, 5.5
+    1.5. Quản lí hoá đơn
+        1.5.1 Theo dõi đơn hàng
+            * JSON truyền vào: {Order ID}
+            * Các chức năng được gọi: 3.3
+        1.5.2 Cập nhật đơn hàng
+            * JSON truyền vào: {Order ID, Status}
+            * Các chức năng được gọi: 3.2, 3.3
 2. Product Service:
 Chia ra thành các chức năng nhỏ hơn: 
     -  Book: 2100 - done
@@ -27,6 +64,8 @@ Chức năng:
         * Các chức năng được gọi: 5.4, 5.5
     3.2. Cập nhật tình trạng hoá đơn
         * JSON truyền vào: {Order ID, Status}
+    3.3. Kiểm tra hoá đơn
+        * JSON truyền vào: {Order ID}
 4. Customer Service: 4000 - done
 Chức năng: 
     4.1. Tạo tài khoản mới:

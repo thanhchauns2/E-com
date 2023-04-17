@@ -143,7 +143,7 @@ def show_inventory(request):
     return HttpResponse('Invalid request', status=400)
 
 @csrf_exempt
-def remove_item_from_inventory(request):
+def remove_product(request):
     if request.method == 'POST':
         if 'application/json' in request.META['CONTENT_TYPE']:
             data = json.loads(request.body)

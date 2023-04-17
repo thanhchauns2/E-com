@@ -69,3 +69,25 @@ def update_order(request):
                 resp['status_code'] = '400'
                 resp['message'] = 'Cannot find object.'
     return HttpResponse(json.dumps(resp), content_type='application/json')
+
+@csrf_exempt
+def show_order(request):
+    resp = {}
+    if request.method == 'POST':
+        if 'application/json' in request.META['CONTENT_TYPE']:
+            val1 = json.loads(request.body)
+            
+            order_id = val1.get("Order ID")
+            
+            order = __get_order(order_id)
+            
+            if order != None: # Giỏ hàng không thể bị thay đổi
+                resp['status'] = 'Success'
+                resp['status_code'] = '200'
+                resp['message'] = 'Order retrived successfully.'
+                resp['data'] = {"Order ID" : order_id, "Description" : order.description, "Status" : order.status}
+            else:
+                resp['status'] = 'Failed'
+                resp['status_code'] = '400'
+                resp['message'] = 'Cannot find object.'
+    return HttpResponse(json.dumps(resp), content_type='application/json')
