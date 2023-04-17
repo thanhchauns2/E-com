@@ -80,7 +80,7 @@ def find_item_in_inventory(inventory, product_id):
     for item in inventory.items:
         if item == str(product_id):
             return inventory.items[item]
-    return 0
+    return -1
 
 @csrf_exempt
 def add_product(request):
@@ -98,7 +98,7 @@ def add_product(request):
                 HttpResponse('Inventory not existed', status=400)
 
             quan = find_item_in_inventory(inventory=inventory, product_id=product_id)
-            if quan == 0: # Thêm sản phẩm mới vào danh sách items của inventory
+            if quan == -1: # Thêm sản phẩm mới vào danh sách items của inventory
                 items = inventory.items
                 items[product_id] = quantity
                 inventory.items = items
@@ -159,21 +159,22 @@ def remove_product(request):
                 return HttpResponse('Inventory not found', status=404)
 
             quan = find_item_in_inventory(inventory=inventory, product_id=product_id)
-            if quan == 0: # Sản phẩm không tồn tại trong inventory
+            if quan == -1: # Sản phẩm không tồn tại trong inventory
                 return HttpResponse('Item not found', status=404)
             else: # Cập nhật số lượng hoặc xoá sản phẩm
                 for item in inventory.items:
-                    if item['Product ID'] == product_id:
-                        new_quantity = item['Quantity'] - quantity
+                    print(item)
+                    if item == str(product_id):
+                        new_quantity = inventory.items[item] - quantity
                         if new_quantity > 0:
-                            item['Quantity'] = new_quantity
+                            inventory.items[item] = new_quantity
                         else:
-                            inventory.items.remove(item)
+                            inventory.items[item] = 0
                 
                 inventory.save()
 
             # Trả về thông tin của inventory đã được cập nhật
-            response_data = {'Inventory ID': inventory.inventory_id, 'User ID': inventory.user_id, 'Items': inventory.items}
+            response_data = {'Inventory ID': inventory.id, 'Items': inventory.items}
             return HttpResponse(json.dumps(response_data), content_type='application/json')
 
     return HttpResponse('Invalid request', status=400)

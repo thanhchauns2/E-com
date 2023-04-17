@@ -1,5 +1,4 @@
 import random, json, requests
-from .models import Cart
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
@@ -35,15 +34,79 @@ def register(request):
                     "Password" : password,
                     "Email" : email
                 }).json()
-                customer_id = requests.post('http://127.0.0.1:4000/users/create_account/', json={
-                    "Address ID" : address_id,
-                    "Fullname ID" : fullname_id,
-                    "Account ID" : account_id
+                customer_id = requests.post('http://127.0.0.1:4000/users/create_customer/', json={
+                    "Address ID" : address_id['data']['Address ID'],
+                    "Fullname ID" : fullname_id['data']['Fullname ID'],
+                    "Account ID" : account_id['data']['Account ID']
                 }).json()
                 resp['status'] = 'Success'
                 resp['status_code'] = '200'
                 resp['message'] = 'Successfully registered.'
-                resp['data'] = {"Customer ID" : customer_id} 
+                resp['data'] = {
+                    "Address" : address_id, 
+                    "Fullname" : fullname_id, 
+                    "Account": account_id, 
+                    "Customer ID" : customer_id
+                } 
+            else:
+                resp['status'] = 'Failed'
+                resp['status_code'] = '400'
+                resp['message'] = 'All fields are mandatory.'
+
+    return HttpResponse(json.dumps(resp), content_type='application/json')
+
+@csrf_exempt
+def register_product(request):
+    resp = {}
+    if request.method == 'POST':
+        if 'application/json' in request.META['CONTENT_TYPE']:
+            data = json.loads(request.body)
+
+            # Lấy thông tin cart và sản phẩm cần thêm
+            category_name = data.get('Category Name')
+            author_name = data.get('Author Name')
+            author_email = data.get('Author Email')
+            author_address = data.get('Author Address')
+            book_title = data.get('Book Title')
+            published_date = data.get('Publishded Date')
+            price = data.get('Price')
+            description = data.get('Description')
+
+            if category_name and author_name and author_email and author_address and book_title and published_date and price and description:
+                requests.post('http://127.0.0.1:2100/books/categories/create/', json={
+                    "Category Name" : category_name
+                }).json()
+                category_id = requests.post('http://127.0.0.1:2100/books/categories/search/', json={
+                    "Category Name" : category_name
+                }).json()
+                requests.post('http://127.0.0.1:2100/books/authors/create/', json={
+                    "Author Name" : author_name,
+                    "Email" : author_email,
+                    "Address" : author_address,
+                }).json()
+                author_id = requests.post('http://127.0.0.1:2100/books/authors/search/', json={
+                    "Author Name" : author_name,
+                    "Email" : author_email,
+                    "Address" : author_address,
+                }).json()
+                print(author_id)
+                print(category_id)
+                book_id = requests.post('http://127.0.0.1:2100/books/books/create/', json={
+                    "Author ID" : author_id['data'][0]['id'],
+                    "Category ID" : category_id['data'][0]['id'],
+                    "Title" : book_title,
+                    "Published Date" : published_date,
+                    "Price" : price,
+                    "Description" : description
+                }).json()
+                resp['status'] = 'Success'
+                resp['status_code'] = '200'
+                resp['message'] = 'Successfully registered.'
+                resp['data'] = {
+                    "Author" : author_id, 
+                    "Category" : category_id, 
+                    "Book" : book_id
+                } 
             else:
                 resp['status'] = 'Failed'
                 resp['status_code'] = '400'
@@ -66,7 +129,7 @@ def inititate_inventory(request):
             elec_quant = data.get('Electronic Quantity')
             status = data.get('Status')
 
-            requests.post('http://127.0.0.1:8000/inventory/initiate/', json={
+            data = requests.post('http://127.0.0.1:8000/inventory/initiate/', json={
                 "Address" : address,
                 "Book Quantity" : book_quant,
                 "Clothes Quantity" : clothes_quant,
@@ -77,6 +140,7 @@ def inititate_inventory(request):
             resp['status'] = 'Success'
             resp['status_code'] = '200'
             resp['message'] = 'Successfully updated.'
+            resp['data'] = data
 
     return HttpResponse(json.dumps(resp), content_type='application/json')
 
@@ -90,7 +154,7 @@ def add_product_to_inventory(request):
             product_id = data.get('Product ID')
             quantity = data.get('Quantity')
 
-            requests.post('http://127.0.0.1:8000/inventory/add_product/', json={
+            data = requests.post('http://127.0.0.1:8000/inventory/add_product/', json={
                 "Product ID" : product_id,
                 "Quantity" : quantity
             }).json()
@@ -98,6 +162,7 @@ def add_product_to_inventory(request):
             resp['status'] = 'Success'
             resp['status_code'] = '200'
             resp['message'] = 'Successfully added product to inventory.'
+            resp['data'] = data
 
     return HttpResponse(json.dumps(resp), content_type='application/json')
 
@@ -111,7 +176,7 @@ def remove_product_from_inventory(request):
             product_id = data.get('Product ID')
             quantity = data.get('Quantity')
 
-            requests.post('http://127.0.0.1:8000/inventory/remove_product/', json={
+            data = requests.post('http://127.0.0.1:8000/inventory/remove_product/', json={
                 "Product ID" : product_id,
                 "Quantity" : quantity
             }).json()
@@ -119,6 +184,7 @@ def remove_product_from_inventory(request):
             resp['status'] = 'Success'
             resp['status_code'] = '200'
             resp['message'] = 'Successfully removed product from inventory.'
+            resp['data'] = data
 
     return HttpResponse(json.dumps(resp), content_type='application/json')
 
@@ -149,7 +215,7 @@ def add_product_to_cart(request):
             product_id = data.get('Product ID')
             quantity = data.get('Quantity')
 
-            requests.post('http://127.0.0.1:5000/carts/add_item_to_cart/', json={
+            data = requests.post('http://127.0.0.1:5000/carts/add_item_to_cart/', json={
                 "User ID" : user_id,
                 "Product ID" : product_id,
                 "Quantity" : quantity
@@ -158,6 +224,7 @@ def add_product_to_cart(request):
             resp['status'] = 'Success'
             resp['status_code'] = '200'
             resp['message'] = 'Successfully added product to cart.'
+            resp['data'] = data
 
     return HttpResponse(json.dumps(resp), content_type='application/json')
 
@@ -173,7 +240,7 @@ def remove_item_from_cart(request):
             product_id = data.get('Product ID')
             quantity = data.get('Quantity')
 
-            requests.post('http://127.0.0.1:5000/carts/remove_item_from_cart/', json={
+            data = requests.post('http://127.0.0.1:5000/carts/remove_item_from_cart/', json={
                 "User ID" : user_id,
                 "Product ID" : product_id,
                 "Quantity" : quantity
@@ -182,6 +249,7 @@ def remove_item_from_cart(request):
             resp['status'] = 'Success'
             resp['status_code'] = '200'
             resp['message'] = 'Successfully removed product from cart.'
+            resp['data'] = data
 
     return HttpResponse(json.dumps(resp), content_type='application/json')
 
@@ -195,14 +263,14 @@ def show_cart(request):
             # Lấy thông tin cart và sản phẩm cần thêm
             user_id = data.get('User ID')
 
-            cart = requests.post('http://127.0.0.1:5000/carts/remove_item_from_cart/', json={
+            cart = requests.post('http://127.0.0.1:5000/carts/show_cart/', json={
                 "User ID" : user_id
             }).json()
 
             resp['status'] = 'Success'
             resp['status_code'] = '200'
             resp['message'] = 'Successfully retrived information.'
-            resp['data'] = {"Cart infomation" : cart}
+            resp['data'] = cart
 
     return HttpResponse(json.dumps(resp), content_type='application/json')
 
@@ -226,7 +294,7 @@ def purchase(request):
 
             resp['status'] = 'Success'
             resp['status_code'] = '200'
-            resp['message'] = 'Successfully retrived information.'
+            resp['message'] = 'Successfully retrieved information.'
             resp['data'] = {"Order ID" : order_id}
 
     return HttpResponse(json.dumps(resp), content_type='application/json')
@@ -247,7 +315,7 @@ def track_order(request):
 
             resp['status'] = 'Success'
             resp['status_code'] = '200'
-            resp['message'] = 'Successfully retrived information.'
+            resp['message'] = 'Successfully retrieved information.'
             resp['data'] = {"Order information" : order}
 
     return HttpResponse(json.dumps(resp), content_type='application/json')

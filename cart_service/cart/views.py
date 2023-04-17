@@ -34,7 +34,7 @@ def find_item_in_cart(cart, product_id):
     for item in cart.items:
         if item == str(product_id):
             return cart.items[item]
-    return 0
+    return -1
 
 
 @csrf_exempt
@@ -55,7 +55,7 @@ def add_item_to_cart(request):
                 return HttpResponse('Cart not found', status=404)
 
             quan = find_item_in_cart(cart=cart, product_id=product_id)
-            if quan == 0: # Thêm sản phẩm mới vào danh sách items của cart
+            if quan == -1: # Thêm sản phẩm mới vào danh sách items của cart
                 items = cart.items
                 items[product_id] = quantity
                 # items.append({'Product ID': product_id, 'Quantity': quantity})
@@ -125,21 +125,21 @@ def remove_item_from_cart(request):
                 return HttpResponse('Cart not found', status=404)
 
             quan = find_item_in_cart(cart=cart, product_id=product_id)
-            if quan == 0: # Sản phẩm không tồn tại trong cart
+            if quan == -1: # Sản phẩm không tồn tại trong cart
                 return HttpResponse('Item not found', status=404)
             else: # Cập nhật số lượng hoặc xoá sản phẩm
                 for item in cart.items:
-                    if item['Product ID'] == product_id:
-                        new_quantity = item['Quantity'] - quantity
+                    if item == str(product_id):
+                        new_quantity = cart.items[item] - quantity
                         if new_quantity > 0:
-                            item['Quantity'] = new_quantity
+                            cart.items[item] = new_quantity
                         else:
-                            cart.items.remove(item)
+                            cart.items[item] = 0
                 
                 cart.save()
 
             # Trả về thông tin của cart đã được cập nhật
-            response_data = {'Cart ID': cart.cart_id, 'User ID': cart.user_id, 'Items': cart.items}
+            response_data = {'Cart ID': cart.id, 'User ID': cart.user_id, 'Items': cart.items}
             return HttpResponse(json.dumps(response_data), content_type='application/json')
 
     return HttpResponse('Invalid request', status=400)
@@ -161,12 +161,12 @@ def clear_cart(request):
             
             items = cart.items
             for item in items:
-                cart.items.remove(item)
+                cart.items[item] = 0
             
             cart.save()
 
             # Trả về thông tin của cart đã được cập nhật
-            response_data = {'Cart ID': cart.cart_id, 'User ID': cart.user_id, 'Items': cart.items, 'Message' : 'Cleared cart successfully.'}
+            response_data = {'Cart ID': cart.id, 'User ID': cart.user_id, 'Items': cart.items, 'Message' : 'Cleared cart successfully.'}
             return HttpResponse(json.dumps(response_data), content_type='application/json')
 
     return HttpResponse('Invalid request', status=400)

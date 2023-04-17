@@ -20,7 +20,6 @@ def create_order(request):
             val1 = json.loads(request.body)
             
             user_id = val1.get("User ID")
-            # description = val1.get("Description")
             description = requests.post('http://127.0.0.1:5000/carts/show_cart/', json={"User ID": user_id}).json()
             status = "Delivering"
             

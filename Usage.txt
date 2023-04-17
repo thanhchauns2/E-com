@@ -1,0 +1,67 @@
+{
+    // Đăng kí
+
+    // "Username" : "abc1332313",
+    // "Password" : "1233334361",
+    // "Email" : "33313@gmail.com",
+    // "Address" : "1ab333cxyz",
+    // "City" : "Ha3n33i1",
+    // "Country" : "Vie3t333am1",
+    // "First Name" : "Ng3333yen1",
+    // "Last Name" : "33331"
+
+    // Khởi tạo kho hàng + cập nhật kho hàng
+
+    // "Address" : "Hanoi",
+    // "Book Quantity" : 50000,
+    // "Clothes Quantity" : 50000,
+    // "Electronic Quantity" : 50000,
+    // "Status" : "Ready"
+
+    // Đăng kí một mặt hàng mới
+
+    // "Category Name" : "Horror",
+    // "Author Name" : "Edgar Allan Poe",
+    // "Author Email" : "a@gmail.com",
+    // "Author Address" : "ab22c3xyz",
+    // "Book Title" : "book",
+    // "Publishded Date" : "2020-10-10",
+    // "Price" : "10",
+    // "Description" : "abasdasdasd"
+
+    // Thêm hàng vào kho
+
+    // "Product ID" : 74827708490362, 
+    // "Quantity" : 100
+
+    // Xoá hàng khỏi kho
+
+    // "Product ID" : 74827708490362, 
+    // "Quantity" : 100
+
+    // Kiểm tra kho hàng
+    // "User ID" : 14886562145040
+
+    // Thêm hàng vào giỏ hàng
+    // "User ID" : 14886562145040,
+    // "Product ID" : 74827708490362,
+    // "Quantity" : 100
+
+    // Xoá hàng khỏi giỏ hàng
+    // "User ID" : 14886562145040,
+    // "Product ID" : 74827708490362,
+    // "Quantity" : 100
+
+    // Kiểm tra giỏ hàng
+    // "User ID" : 14886562145040
+
+    // Mua hàng
+    // "User ID" : 14886562145040
+
+    // Theo dõi đơn hàng
+    // "Order ID" : 29662756138573
+
+    // Cập nhật trạng thái đơn hàng
+    // "Order ID" : 29662756138573,
+    // "Status" : "Done"
+}

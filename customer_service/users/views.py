@@ -28,7 +28,7 @@ def create_account(request):
                 resp['status'] = 'Success'
                 resp['status_code'] = '200'
                 resp['message'] = 'Added account.'
-                resp['data'] = {'account_id': respdata}
+                resp['data'] = {'Account ID': respdata}
             else:
                 resp['status'] = 'Failed'
                 resp['status_code'] = '400'
@@ -79,7 +79,7 @@ def create_fullname(request):
                 resp['status'] = 'Success'
                 resp['status_code'] = '200'
                 resp['message'] = 'Added fullname.'
-                resp['data'] = {'fullname_id': respdata}
+                resp['data'] = {'Fullname ID': respdata}
             else:
                 resp['status'] = 'Failed'
                 resp['status_code'] = '400'
@@ -108,7 +108,7 @@ def create_address(request):
                 resp['status'] = 'Success'
                 resp['status_code'] = '200'
                 resp['message'] = 'Added address.'
-                resp['data'] = {'address_id': respdata}
+                resp['data'] = {'Address ID': respdata}
             else:
                 resp['status'] = 'Failed'
                 resp['status_code'] = '400'
@@ -137,7 +137,7 @@ def create_customer(request):
                 resp['status'] = 'Success'
                 resp['status_code'] = '200'
                 resp['message'] = 'Added customer.'
-                resp['data'] = {'customer_id': respdata}
+                resp['data'] = {'Customer ID': respdata}
                 requests.post('http://127.0.0.1:5000/carts/create_cart/', json={"User ID": respdata}).json()
             else:
                 resp['status'] = 'Failed'

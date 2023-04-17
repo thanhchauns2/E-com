@@ -102,7 +102,7 @@ def create_book(request):
                 resp['status'] = 'Success'
                 resp['status_code'] = '200'
                 resp['message'] = 'Added book.'
-                resp['data'] = {'book_id': respdata}
+                resp['data'] = {'Book ID': respdata}
             else:
                 resp['status'] = 'Failed'
                 resp['status_code'] = '400'
