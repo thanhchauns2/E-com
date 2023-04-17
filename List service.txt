@@ -4,17 +4,17 @@ Công nghệ sử dụng: Django REST Framework
 2. Product Service:
 Chức năng: Quản lý các sản phẩm trong hệ thống, bao gồm thông tin sản phẩm, giá cả, số lượng trong kho, v.v.
 Chia ra thành các chức năng nhỏ hơn: 
-    -  Book: 2100
+    -  Book: 2100 - done
     -  Electronics: 2200
     -  Clothes: 2300
 Công nghệ sử dụng: Django ORM
 3. Order Service: 3000
 Chức năng: Quản lý các đơn hàng trong hệ thống, bao gồm thông tin đơn hàng, khách hàng, sản phẩm, giá cả, v.v.
 Công nghệ sử dụng: Django ORM
-4. User Service: 4000
+4. User Service: 4000 - done
 Chức năng: Quản lý thông tin người dùng trong hệ thống, bao gồm thông tin cá nhân, địa chỉ, thông tin đăng nhập, v.v.
 Công nghệ sử dụng: Django ORM
-5. Cart Service: 5000
+5. Cart Service: 5000 - done
 Chức năng: Quản lý giỏ hàng của khách hàng, bao gồm thông tin sản phẩm, số lượng, giá cả, v.v.
 Công nghệ sử dụng: Django ORM
 6. Payment Service: 6000
