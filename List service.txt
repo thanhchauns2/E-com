@@ -18,9 +18,15 @@ Chức năng:
         1.3.4 Kiểm tra kho hàng
             * JSON truyền vào: {}
             * Các chức năng được gọi: 8.4
-        1.3.5 Đăng kí một mặt hàng mới
+        1.3.5 Đăng kí một mặt hàng Book mới
             * JSON truyền vào: {Category Name, Author Name, Author Email, Author Address, Book Title, Publishded Date, Price, Description}
             * Các chức năng được gọi: 2.1.1, 2.1.2, 2.1.3
+        1.3.6 Đăng kí một mặt hàng Shoes mới
+            * JSON truyền vào: {Product Name, Brand Name, Color, Size, Price, Description}
+            * Các chức năng được gọi: 2.2.1, 2.2.2, 2.2.5
+        1.3.7 Đăng kí một mặt hàng Clothes mới
+            * JSON truyền vào: {Product Name, Brand Name, Category, Size, Price, Description}
+            * Các chức năng được gọi: 2.2.1, 2.2.2, 2.2.5
             
     1.4. Quản lí giỏ hàng:
         1.4.1. Thêm hàng vào giỏ hàng
@@ -59,8 +65,32 @@ Chia ra thành các chức năng nhỏ hơn:
             * JSON truyền vào: {Category Name}
         2.1.7: Tìm book
             * JSON truyền vào: {search_term}, search_term có thể là: id sách, tên sách, tên category, tên author
-    -  Shoes: 2200 - Not neccessary
-    -  Clothes: 2300 - Not neccessary
+    -  Shoes: 2200
+        2.2.1: Tạo brand:
+            * JSON truyền vào: {Brand Name}
+        2.2.2: Tạo shoe:
+            * JSON truyền vào: {Name, Brand ID,  Color, Size, Price, Description}
+        2.2.3: Xoá brand:
+            * JSON truyền vào: {Brand ID}
+        2.2.4: Xoá shoe:
+            * JSON truyền vào: {Shoe ID}
+        2.2.5: Tìm brand:
+            * JSON truyền vào: {Brand Name}
+        2.2.6: Tìm shoe:
+            * JSON truyền vào: {Shoe Name}
+    -  Clothes: 2300
+        2.3.1: Tạo brand:
+            * JSON truyền vào: {Brand Name}
+        2.3.2: Tạo clothes:
+            * JSON truyền vào: {Name, Brand ID,  Category, Size, Price, Description}
+        2.3.3: Xoá brand:
+            * JSON truyền vào: {Brand ID}
+        2.3.4: Xoá clothes:
+            * JSON truyền vào: {Clothing ID}
+        2.3.5: Tìm brand:
+            * JSON truyền vào: {Brand Name}
+        2.3.6: Tìm clothes:
+            * JSON truyền vào: {Clothing Name}
 3. Order Service: 3000 - done
 Chức năng: 
     3.1. Tạo hoá đơn:
