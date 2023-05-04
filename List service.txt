@@ -59,7 +59,7 @@ Chia ra thành các chức năng nhỏ hơn:
             * JSON truyền vào: {Category Name}
         2.1.7: Tìm book
             * JSON truyền vào: {search_term}, search_term có thể là: id sách, tên sách, tên category, tên author
-    -  Electronics: 2200 - Not neccessary
+    -  Shoes: 2200 - Not neccessary
     -  Clothes: 2300 - Not neccessary
 3. Order Service: 3000 - done
 Chức năng: 
