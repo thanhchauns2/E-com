@@ -27,4 +27,12 @@ urlpatterns = [
     # Order
     path('track_order/', order_views.track_order, name='track_order'),
     path('update_order/', order_views.update_order, name='update_order'),
+
+    # Frontend
+    path('', views.index, name='index'),
+    path('about/', views.about, name='about'),
+    path('cart/', views.cart, name='cart'),
+    path('privacy/', views.privacy, name='privacy'),
+    path('contact/', views.contact, name='contact'),
+    path('login/', views.login, name='login'),
 ]
